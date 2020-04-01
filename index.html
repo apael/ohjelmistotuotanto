@@ -1,0 +1,445 @@
+<html lang="en">
+
+<title>Example</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    td.details-control {
+        background: url('../open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('../close.png') no-repeat center center;
+    }
+
+    .linkbox {
+        border: 1px solid black;
+        display: inline-block;
+        padding: 1em;
+    }
+
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* Style the header */
+    header {
+        background-color: #666;
+        padding: 30px;
+        text-align: center;
+        font-size: 35px;
+        color: white;
+    }
+
+    /* Create two columns/boxes that floats next to each other */
+    nav {
+        float: left;
+        width: 15%;
+        background: #ccc;
+        padding: 20px;
+        height: 100%;
+
+    }
+
+    /* Style the list inside the menu */
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    article {
+        float: left;
+        padding: 20px;
+        width: 85%;
+        background-color: #f1f1f1;
+        height: 100%;
+
+    }
+
+    /* Clear floats after the columns */
+    section:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Style the footer */
+    footer {
+        background-color: #777;
+        padding: 10px;
+        text-align: center;
+        color: white;
+    }
+
+    /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+    @media (max-width: 600px) {
+
+        nav,
+        article {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+        height: 330px;
+        /* Full height */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+<body>
+    <header>
+        <h2>Varausjärjestelmä</h2>
+    </header>
+
+    <section>
+        <nav id="vas_laita">
+
+            <ul id="asLista">
+            </ul>
+            <Button name="asiakas_btn" id="asiakas_btn" onclick="buildModal('asiakkaat')">Lisää Asiakas</button><br>
+            <Button name="lasku_btn" id="lasku_btn" onclick="buildModal('laskut')">Lisää Lasku</button><br>
+            <Button name="palvelu_btn" id="palvelu_btn" onclick="buildModal('palvelut')">Lisää Palvelu</button><br>
+            <Button name="alue_btn" id="alue_btn" onclick="buildModal('toimialueet')">Lisää Alue</button><br>
+            <Button name="varaus_btn" id="varaus_btn" onclick="buildModal('varaukset?id=k')">Lisää Varus</button><br>
+
+        </nav>
+
+
+        <article id="oik_laita">
+
+            <label for="alue">Toimialue</label>
+            <select name="alue" id="alue" onChange="FilterAlue()"> </select>
+
+            <table id="laskutaulu">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>varaus_id</th>
+                        <th>asiakas_id</th>
+                        <th>toimintaalue_id</th>
+                        <th>varattu_pvm</th>
+                        <th>vahvistus_pvm</th>
+                        <th>varattu_alkupvm</th>
+                        <th>varattu_loppupvm</th>
+                        <th></th>
+                        <!---maksettu--->
+                    </tr>
+                </thead>
+                <tbody id="bodyid">
+                </tbody>
+            </table>
+
+        </article>
+    </section>
+
+    <footer>
+        <p></p>
+    </footer>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content" id="content">
+            <div id="modal_b">
+            </div>
+        </div>
+    </div>
+    <iframe name="huijausikkuna" style="display:none;"></iframe>
+    <script>
+        const baseUrl = "http://localhost:3002/";
+
+        $(document).ready(function () {
+            var tauludata;
+            $.ajax({
+                url: "/toimialueet",
+                type: 'GET',
+                success: function (data) {
+                    data.forEach(element => {
+                        $("#alue").append('<option value="' + element.nimi + '">' + element.nimi + '</option>');
+                    })
+                }
+            });
+
+
+
+            $.ajax({
+                url: "/asiakkaat",
+                type: 'GET',
+                success: function (data) {
+                    data.forEach(element => {
+                        $("#asLista").append('<li><a href = "#" onclick="getVaraukset(\'varaukset?id=' + element.asiakas_id + '\')">' + element.etunimi + " " + element.sukunimi + '</a></li>');
+                    })
+                }
+            });
+
+
+            var table = $('#laskutaulu').DataTable({
+                "columns": [
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    { "data": "varaus_id" },
+                    { "data": "asiakas_id" },
+                    { "data": "toimintaalue_id" },
+                    { "data": "varattu_pvm" },
+                    { "data": "vahvistus_pvm" },
+                    { "data": "varattu_alkupvm" },
+                    { "data": "varattu_loppupvm" },
+                    {
+                        "targets": [8],
+                        "data": null,
+                        "defaultContent": '<input class="cbox" type="checkbox">Maksettu</input>'
+                    },
+                    {
+                        "targets": [9],
+                        "data": "nimi",
+                        "visible": false
+                    },
+                    {
+                        "targets": [10],
+                        "data": "lahiosoite",
+                        "visible": false
+                    },
+                    {
+                        "targets": [11],
+                        "data": "postitoimipaikka",
+                        "visible": false
+                    },
+                    {
+                        "targets": [12],
+                        "data": "postinro",
+                        "visible": false
+                    },
+                    {
+                        "targets": [13],
+                        "data": "summa",
+                        "visible": false
+                    },
+                    {
+                        "targets": [14],
+                        "data": "alv",
+                        "visible": false
+                    }
+                ],
+                "order": [[1, 'asc']]
+
+            });
+
+            getVaraukset("varaukset");
+
+            $('#laskutaulu tbody').on('click', 'td.details-control', function () {//funktio joka avaa lisäinfot kun painaa nappulaa
+
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+
+            $('#laskutaulu tbody').on('click', 'input', function () {//mark as paid funktio
+
+                $(this).attr("checked", "checked");
+                $(this).attr("disabled", "disabled");
+
+                var data = table.row($(this).parents('tr')).data();
+                data.maksettu = 1;
+
+                markAsPaid(data.varaus_id)
+
+
+            });
+
+
+        });//document ready
+
+        function buildModal(paate) {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+            document.getElementById('modal_b').innerHTML = "";
+            url = baseUrl + paate
+            console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    console.log(paate + " tieto haettu onnistuneesti");
+                    var i = 0;
+                    console.log(data[0])
+                    for (x in data[0]) {
+                        $("#modal_b").append('<label for="' + x + '">' + x + '</label><input type="text" class="modalInput" name="' + x + '" id="' + x + '"><br>');
+                        i++;
+                    };
+                    $("#modal_b").append('<button onclick="InsertInto(\'' + paate + '\')">Insert</button><button onclick="CloseModal()">Close</button>');
+
+                }
+            });
+        }
+
+        function getVaraukset(paate) {
+
+            var url = baseUrl + paate;
+
+            var table = $('#laskutaulu').DataTable();
+
+            table.clear();
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    data.forEach(element => {
+                        console.log(element);
+                        table.row.add(element);
+                        table.draw();
+                    });
+
+                    $('.cbox').each(function (e) {
+                        var tr = $(this).closest('tr');
+                        var row = table.row(tr);
+                        if (row.data().maksettu == true) {
+                            $(this).attr("checked", "checked");
+                            $(this).attr("disabled", "disabled");
+                        }
+                    });
+
+                    table.draw();
+
+                }
+            });
+        }
+        function CloseModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        function InsertInto(paate) {
+
+            url = baseUrl + paate
+
+            var todo = {};
+            $('.modalInput').each(function (e) {
+                var name = $(this).attr("name");
+                var value = $(this).val();
+                todo[name] = value;
+            });
+
+            console.log(todo);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: todo,
+                success: function (data) {
+                    console.log(paate + " lisätty onnistuneesti")
+                    CloseModal();
+                }
+            });
+        }
+        function markAsPaid(id) {//merkitsee varaus id laskun maksetuksi
+            var todo = {
+                "arvo": 1,
+                "id": id
+            };
+
+            $.ajax({
+                url: baseUrl + "lasku",
+                type: 'PUT',
+                data: todo,
+                success: function (data) {
+                    console.log("lasku merkattu maksetuksi");
+                }
+            });
+        }
+
+
+        function format(d) { //lisäinfot painaessa ensimmäistä saraketta
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                '<td>nimi:</td>' +
+                '<td>' + d.nimi + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>lahiosoite:</td>' +
+                '<td>' + d.lahiosoite + '</td>' +
+                '</tr>' +
+                '<td>postitoimipaikka:</td>' +
+                '<td>' + d.postitoimipaikka + '</td>' +
+                '</tr>' +
+                '<td>postinro:</td>' +
+                '<td>' + d.postinro + '</td>' +
+                '</tr>' +
+                '<td>summa:</td>' +
+                '<td>' + d.summa + '</td>' +
+                '</tr>' +
+                '<td>alv:</td>' +
+                '<td>' + d.alv + '</td>' +
+                '</tr>' +
+                '</table>';
+        }
+
+
+    </script>
