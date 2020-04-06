@@ -37,7 +37,7 @@ app.get('/', function (req, res) {
 app.get("/varaukset", (req, res, n) => {
 
   if (req.query.id !== undefined) {
-    var sql = ("SELECT * FROM varaus where asiakas_id='" + req.query.id + "';")
+    var sql = ("SELECT * FROM`varaus` CROSS JOIN`lasku` ON`varaus`.`varaus_id` = `lasku`.`varaus_id`  where asiakas_id='" + req.query.id + "';")
 
   } else
     var sql = ("SELECT * FROM`varaus` CROSS JOIN`lasku` ON`varaus`.`varaus_id` = `lasku`.`varaus_id` CROSS JOIN`asiakas` ON`varaus`.`asiakas_id` = `asiakas`.`asiakas_id`;")
@@ -119,6 +119,12 @@ app.get("/toimialueet", (req, res, n) => {
 app.get("/asiakkaat", (req, res, n) => {
 
   var sql = ("SELECT * FROM asiakas");
+  console.log("Body = " + JSON.stringify(req.body));
+
+  if (req.body.id != undefined)
+    var sql = ("SELECT * FROM asiakas WHERE  `asiakas_id`='" + req.body.id + "'");
+
+
   console.log("asiakkaat haettu");
   connection.query(sql, function (error, results, fields) {
 
@@ -144,7 +150,19 @@ app.get("/mokit", (req, res, n) => {
     res.json(results);
   });
 });
+// --- GET posti ---
+app.get("/posti", (req, res, n) => {
 
+  var sql = ("SELECT * FROM posti");
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
 
 // --- CREATE asiakas ---
 app.post("/asiakkaat", (req, res, n) => {
@@ -300,6 +318,7 @@ app.post("/varauspalvelu", (req, res, n) => {
 
   var sql = ("INSERT INTO`vn`.`lasku`(`lasku_id`, `varaus_id`, `summa`, `alv`, `maksettu`) VALUES('" + req.body.lasku_id + "', '" + req.body.varaus_id + "', '" + req.body.summa + req.body.alv + "', '" + req.body.maksettu + "');")
 
+
   connection.query(sql, function (error, results, fields) {
 
     if (error) {
@@ -310,12 +329,83 @@ app.post("/varauspalvelu", (req, res, n) => {
   });
 });
 
+// --- DELETE toimintaalue ---
+app.delete("/toimintaalue", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+
+  var sql = ("DELETE FROM`vn`.`toimintaalue` WHERE`toimintaalue_id` = '" + req.body.toimintaalue_id + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- DELETE mokki ---
+app.delete("/mokit", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+
+  var sql = ("DELETE FROM`vn`.`mokki` WHERE`mokki_id` = '" + req.body.mokki_id + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- DELETE palvelu ---
+app.delete("/palvelut", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+
+  var sql = ("DELETE FROM`vn`.`palvelu` WHERE`palvelu_id` = '" + req.body.palvelu_id + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+
 // --- UPDATE lasku ---
 app.put("/lasku", (req, res, n) => {
 
 
 
   var sql = ("UPDATE lasku SET maksettu ='" + req.body.arvo + "' where varaus_id = '" + req.body.id + "'");
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- UPDATE asiakas ---
+app.put("/asiakkaat", (req, res, n) => {
+  console.log(req.body);
+
+
+  var sql = ("UPDATE`vn`.`asiakas` SET`postinro` = '" + req.body.postinro + "', `etunimi` = '" + req.body.etunimi + "', `sukunimi` = '" + req.body.sukunimi + "', `lahiosoite` = '" + req.body.lahiosoite + "', `email` = '" + req.body.email + "', `puhelinnro` = '" + req.body.puhelinnro + "' WHERE`asiakas_id` = '" + req.body.asiakas_id + "';");
+  console.log(sql);
+
+
   connection.query(sql, function (error, results, fields) {
 
     if (error) {

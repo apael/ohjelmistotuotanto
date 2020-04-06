@@ -153,11 +153,15 @@
 
             <ul id="asLista">
             </ul>
-            <Button name="asiakas_btn" id="asiakas_btn" onclick="buildModal('asiakkaat')">Lisää Asiakas</button><br>
-            <Button name="lasku_btn" id="lasku_btn" onclick="buildModal('laskut')">Lisää Lasku</button><br>
-            <Button name="palvelu_btn" id="palvelu_btn" onclick="buildModal('palvelut')">Lisää Palvelu</button><br>
-            <Button name="alue_btn" id="alue_btn" onclick="buildModal('toimialueet')">Lisää Alue</button><br>
-            <Button name="varaus_btn" id="varaus_btn" onclick="buildModal('varaukset?id=k')">Lisää Varus</button><br>
+            <Button name="asiakas_btn" id="asiakas_btn" onclick="buildModal('asiakkaat','0')">Lisää Asiakas</button><br>
+            <Button name="lasku_btn" id="lasku_btn" onclick="buildModal('laskut','0')">Lisää Lasku</button><br>
+            <Button name="palvelu_btn" id="palvelu_btn" onclick="buildModal('palvelut','0')">Lisää Palvelu</button><br>
+            <Button name="alue_btn" id="alue_btn" onclick="buildModal('toimialueet','0')">Lisää Alue</button><br>
+            <Button name="varaus_btn" id="varaus_btn" onclick="buildModal('varaukset?id=k','0')">Lisää
+                Varaus</button><br>
+            <Button name="mokki_btn" id="mokki_btn" onclick="buildModal('mokit','0')">Lisää Mökki</button><br>
+            <Button name="posti_btn" id="posti_btn" onclick="buildModal('posti','0')">Lisää Posti os</button><br>
+
 
         </nav>
 
@@ -222,10 +226,11 @@
                 type: 'GET',
                 success: function (data) {
                     data.forEach(element => {
-                        $("#asLista").append('<li><a href = "#" onclick="getVaraukset(\'varaukset?id=' + element.asiakas_id + '\')">' + element.etunimi + " " + element.sukunimi + '</a></li>');
+                        $("#asLista").append('<li><a href = "#" onclick="buildModal(\'asiakkaat\',\'' + element.asiakas_id + '\')">' + element.etunimi + " " + element.sukunimi + '</a></li>');
                     })
                 }
             });
+
 
 
             var table = $('#laskutaulu').DataTable({
@@ -321,12 +326,16 @@
 
         });//document ready
 
-        function buildModal(paate) {
+        function buildModal(paate, id) {
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
             document.getElementById('modal_b').innerHTML = "";
             url = baseUrl + paate
             console.log(url);
+
+            var todo = {
+                "id": id
+            };
 
             $.ajax({
                 url: url,
@@ -339,11 +348,31 @@
                         $("#modal_b").append('<label for="' + x + '">' + x + '</label><input type="text" class="modalInput" name="' + x + '" id="' + x + '"><br>');
                         i++;
                     };
-                    $("#modal_b").append('<button onclick="InsertInto(\'' + paate + '\')">Insert</button><button onclick="CloseModal()">Close</button>');
+                    $("#modal_b").append('<button id="new" onclick="InsertInto(\'' + paate + '\')">Insert</button><button onclick="CloseModal()">Close</button>');
 
                 }
             });
+            if (id > 0) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: todo,
+                    success: function (data) {
+                        var dataobjecti = data[0];
+                        for (x in dataobjecti) {
+                            var value = dataobjecti[x];
+                            $("#" + x).val(value);
+                        }
+                        $("#new").detach();
+                        $("#modal_b").append('<button onclick="EditInfo(\'' + paate + '\')">Edit</button>');
+                    }
+                });
+            }
+
+
         }
+
+
 
         function getVaraukset(paate) {
 
@@ -405,6 +434,8 @@
                 }
             });
         }
+
+
         function markAsPaid(id) {//merkitsee varaus id laskun maksetuksi
             var todo = {
                 "arvo": 1,
@@ -421,6 +452,23 @@
             });
         }
 
+        function EditInfo(paate) {//päivitetään arvoja
+            var todo = {};
+            $('.modalInput').each(function (e) {
+                var name = $(this).attr("name");
+                var value = $(this).val();
+                todo[name] = value;
+            });
+
+            $.ajax({
+                url: baseUrl + paate,
+                type: 'PUT',
+                data: todo,
+                success: function (data) {
+                    console.log(paate + " arvot päivitetty");
+                }
+            });
+        }
 
         function format(d) { //lisäinfot painaessa ensimmäistä saraketta
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
