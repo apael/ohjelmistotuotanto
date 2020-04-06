@@ -22,9 +22,9 @@ const path = require("path");
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'xxxx',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'xxxx',
-  database: 'vp',
+  user: 'x',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
+  password: 'x',
+  database: 'vn',
   port: '3307'//databaseport tähän
 
 });
@@ -40,7 +40,7 @@ app.get("/varaukset", (req, res, n) => {
     var sql = ("SELECT * FROM varaus where asiakas_id='" + req.query.id + "';")
 
   } else
-    var sql = ("SELECT * FROM`varaus` CROSS JOIN`lasku` ON`varaus`.`varaus_id` = `lasku`.`varaus_id`;")
+    var sql = ("SELECT * FROM`varaus` CROSS JOIN`lasku` ON`varaus`.`varaus_id` = `lasku`.`varaus_id` CROSS JOIN`asiakas` ON`varaus`.`asiakas_id` = `asiakas`.`asiakas_id`;")
 
   if (req.query.id == "k")
     var sql = ("SELECT * FROM varaus")
@@ -130,6 +130,22 @@ app.get("/asiakkaat", (req, res, n) => {
   });
 });
 
+// --- GET mokit ---
+app.get("/mokit", (req, res, n) => {
+
+  var sql = ("SELECT * FROM mokki");
+  console.log("mokit haettu");
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+
 // --- CREATE asiakas ---
 app.post("/asiakkaat", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
@@ -149,6 +165,150 @@ app.post("/asiakkaat", (req, res, n) => {
   });
 });
 
+
+// --- CREATE mokki ---
+app.post("/mokit", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO`vn`.`mokki`(`toimintaalue_id`, `postinro`, `mokkinimi`, `katuosoite`, `kuvaus`, `henkilomaara`, `varustelu`) VALUES('" + req.body.toimintaalue_id + "', '" + req.body.postinro + "', '" + req.body.mokkinimi + "', '" + req.body.katuosoite + "', '" + req.body.kuvaus + "', '" + req.body.henkilomaara + "', '" + req.body.varustelu + "');")
+
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+
+// --- CREATE palvelu ---
+app.post("/palvelut", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO`vn`.`palvelu`(`palvelu_id`, `toimintaalue_id`, `nimi`, `tyyppi`, `kuvaus`, `hinta`, `alv`) VALUES('" + req.body.palvelu_id + "', '" + req.body.toimintaalue_id + "', '" + req.body.nimi + "', '" + req.body.tyyppi + "', '" + req.body.kuvaus + "', '" + req.body.hinta + "', '" + req.body.alv + "');")
+
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+
+// --- CREATE toimialue ---
+app.post("/toimialueet", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO`vn`.`toimintaalue`(`nimi`) VALUES('" + req.body.nimi + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- CREATE posti ---
+app.post("/posti", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO `vn`.`posti` (`postinro`, `toimipaikka`) VALUES ('" + req.body.postinro + "', '" + req.body.toimipaikka + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- CREATE varaus ---
+app.post("/varaukset", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO`vn`.`varaus`(`asiakas_id`, `mokki_mokki_id`, `varattu_pvm`, `vahvistus_pvm`, `varattu_alkupvm`, `varattu_loppupvm`) VALUES('" + req.body.asiakas_id + "', '" + req.body.mokki_mokki_id + "', '" + req.body.varattu_pvm + "', '" + req.body.vahvistus_pvm + "', '" + req.body.varattu_alkupvm + "', '" + req.body.varattu_loppupvm + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- CREATE varauspalvelu ---
+app.post("/varauspalvelu", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO`vn`.`varauksen_palvelut`(`varaus_id`, `palvelu_id`, `lkm`) VALUES('" + req.body.varaus_id + "', '" + req.body.palvelu_id + "', '" + req.body.lkm + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- CREATE lasku ---
+app.post("/varauspalvelu", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
+  if (req.body.length > 0) {
+    console.log(req.body);
+  }
+
+  var sql = ("INSERT INTO`vn`.`lasku`(`lasku_id`, `varaus_id`, `summa`, `alv`, `maksettu`) VALUES('" + req.body.lasku_id + "', '" + req.body.varaus_id + "', '" + req.body.summa + req.body.alv + "', '" + req.body.maksettu + "');")
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
 
 // --- UPDATE lasku ---
 app.put("/lasku", (req, res, n) => {

@@ -173,7 +173,7 @@
                         <th></th>
                         <th>varaus_id</th>
                         <th>asiakas_id</th>
-                        <th>toimintaalue_id</th>
+                        <th>mokki_mokki_id</th>
                         <th>varattu_pvm</th>
                         <th>vahvistus_pvm</th>
                         <th>varattu_alkupvm</th>
@@ -238,7 +238,7 @@
                     },
                     { "data": "varaus_id" },
                     { "data": "asiakas_id" },
-                    { "data": "toimintaalue_id" },
+                    { "data": "mokki_mokki_id" },
                     { "data": "varattu_pvm" },
                     { "data": "vahvistus_pvm" },
                     { "data": "varattu_alkupvm" },
@@ -250,7 +250,7 @@
                     },
                     {
                         "targets": [9],
-                        "data": "nimi",
+                        "data": "etunimi",
                         "visible": false
                     },
                     {
@@ -260,7 +260,7 @@
                     },
                     {
                         "targets": [11],
-                        "data": "postitoimipaikka",
+                        "data": "sukunimi",
                         "visible": false
                     },
                     {
@@ -276,6 +276,11 @@
                     {
                         "targets": [14],
                         "data": "alv",
+                        "visible": false
+                    },
+                    {
+                        "targets": [15],
+                        "data": "puhelinnro",
                         "visible": false
                     }
                 ],
@@ -394,6 +399,7 @@
                 type: 'POST',
                 data: todo,
                 success: function (data) {
+                    console.log(data)
                     console.log(paate + " lisätty onnistuneesti")
                     CloseModal();
                 }
@@ -420,14 +426,14 @@
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
                 '<tr>' +
                 '<td>nimi:</td>' +
-                '<td>' + d.nimi + '</td>' +
+                '<td>' + d.etunimi + " " + d.sukunimi + '</td>' +
                 '</tr>' +
                 '<tr>' +
                 '<td>lahiosoite:</td>' +
                 '<td>' + d.lahiosoite + '</td>' +
                 '</tr>' +
-                '<td>postitoimipaikka:</td>' +
-                '<td>' + d.postitoimipaikka + '</td>' +
+                '<td>puhelinnro:</td>' +
+                '<td>' + d.puhelinnro + '</td>' +
                 '</tr>' +
                 '<td>postinro:</td>' +
                 '<td>' + d.postinro + '</td>' +
