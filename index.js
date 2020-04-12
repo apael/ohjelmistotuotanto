@@ -22,8 +22,8 @@ const path = require("path");
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'xxx',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'xxx',
+  user: 'xx',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
+  password: 'xx',
   database: 'vn',
   port: '3307'//databaseport tähän
 
@@ -448,7 +448,7 @@ app.put("/asiakkaat", (req, res, n) => {
 
 
 // --- UPDATE alue ---
-app.put("/asiakkaat", (req, res, n) => {
+app.put("/toimialueet", (req, res, n) => {
   console.log(req.body);
 
 
