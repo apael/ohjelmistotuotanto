@@ -22,61 +22,62 @@ const path = require("path");
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'ruutti',
+  user: 'x',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
+  password: 'x',
   database: 'vn',
   port: '3307'//databaseport tähän
 
 });
 app.get('/', function (req, res) {
   res.statusCode = 200;
-  res.sendFile('J:/projektit/ohjelmistotuotanto/index.html');
+  res.sendFile('C:/Users/Desktop/Koulu/Ohjelmistotuotanto/ohjelmistotuotanto/index.html');
 });
 
 // --- GET varaukset	   ---
 app.get("/varaukset", (req, res, n) => {
 
-  var sql = ("SELECT * FROM varaus");
-  console.log(req.query.id);
+  if (req.query.id !== undefined) {
+    var sql = ("SELECT * FROM`varaus` CROSS JOIN`lasku` ON`varaus`.`varaus_id` = `lasku`.`varaus_id`  where asiakas_id='" + req.query.id + "';")
 
 
-  if (req.query.id != undefined)
-    var sql = ("SELECT * FROM varaus where varaus_id='" + req.query.id + "';")
+    if (req.query.id != undefined)
+      var sql = ("SELECT * FROM varaus where varaus_id='" + req.query.id + "';")
 
 
 
-  if (req.query.id == "k")
-    var sql = (
-      "SELECT * FROM`varaus` " +
-      "INNER JOIN lasku ON`varaus`.`varaus_id` = `lasku`.`varaus_id`" +
-      "INNER JOIN mokki ON`mokki`.`mokki_id` = `varaus`.`mokki_mokki_id`" +
-      "INNER JOIN asiakas ON`asiakas`.`asiakas_id` = `varaus`.`asiakas_id` " +
-      "INNER JOIN toimintaalue ON`toimintaalue`.`toimintaalue_id` = `mokki`.`toimintaalue_id`;");
+    if (req.query.id == "k")
+      var sql = (
+        "SELECT * FROM`varaus` " +
+        "INNER JOIN lasku ON`varaus`.`varaus_id` = `lasku`.`varaus_id`" +
+        "INNER JOIN mokki ON`mokki`.`mokki_id` = `varaus`.`mokki_mokki_id`" +
+        "INNER JOIN asiakas ON`asiakas`.`asiakas_id` = `varaus`.`asiakas_id` " +
+        "INNER JOIN toimintaalue ON`toimintaalue`.`toimintaalue_id` = `mokki`.`toimintaalue_id`;");
+
+    if (req.query.id == "k")
+      var sql = ("SELECT * FROM varaus")
+
+    console.log(sql);
 
 
-  console.log(sql);
+    connection.query(sql, function (error, results, fields) {
 
+      if (error) {
+        console.log("Virhe, syy: " + error);
+        res.send({ "status": 500, "error": error, "response": null });
+      }
+      res.json(results);
+    });
 
-  connection.query(sql, function (error, results, fields) {
-
-    if (error) {
-      console.log("Virhe, syy: " + error);
-      res.send({ "status": 500, "error": error, "response": null });
-    }
-    res.json(results);
   });
-
-});
 
 // --- GET laskut ---
 app.get("/laskut", (req, res, n) => {
 
-  var sql = ("SELECT * FROM lasku");
+  if (req.body.length > 0) {
+    var sql = ("SELECT * FROM lasku where asiakas_id='" + req.body.asiakas_id + "';")
 
-
-  if (req.query.id != undefined)
-    var sql = ("SELECT * FROM lasku where asiakas_id='" + req.query.id + "';")
-
+  } else
+    var sql = ("SELECT * FROM lasku")
 
 
   connection.query(sql, function (error, results, fields) {
@@ -93,13 +94,12 @@ app.get("/laskut", (req, res, n) => {
 // --- GET palvelut ---
 app.get("/palvelut", (req, res, n) => {
 
+  if (req.body.length > 0) {
+    var sql = ("SELECT * FROM lasku where toimintaalue_id='" + req.body.alue + "';")
 
-  var sql = ("SELECT * FROM palvelu");
+  } else
+    var sql = ("SELECT * FROM palvelu")
 
-  if (req.query.id != undefined)
-    var sql = ("SELECT * FROM palvelu WHERE  `palvelu_id`='" + req.query.id + "'");
-
-  console.log(sql);
 
   connection.query(sql, function (error, results, fields) {
 
@@ -114,13 +114,7 @@ app.get("/palvelut", (req, res, n) => {
 // --- GET toimialueet ---
 app.get("/toimialueet", (req, res, n) => {
 
-
-  var sql = ("SELECT * FROM toimintaalue");
-
-  if (req.query.id != undefined)
-    var sql = ("SELECT * FROM toimintaalue WHERE  `toimintaalue_id`='" + req.query.id + "'");
-
-  console.log(sql);
+  var sql = ("SELECT * FROM toimintaalue")
 
   connection.query(sql, function (error, results, fields) {
 
@@ -136,10 +130,10 @@ app.get("/toimialueet", (req, res, n) => {
 app.get("/asiakkaat", (req, res, n) => {
 
   var sql = ("SELECT * FROM asiakas");
-  console.log("Body = " + JSON.stringify(req.query));
+  console.log("Body = " + JSON.stringify(req.body));
 
-  if (req.query.id != undefined)
-    var sql = ("SELECT * FROM asiakas WHERE  `asiakas_id`='" + req.query.id + "'");
+  if (req.body.id != undefined)
+    var sql = ("SELECT * FROM asiakas WHERE  `asiakas_id`='" + req.body.id + "'");
 
 
   console.log("asiakkaat haettu");
@@ -189,8 +183,7 @@ app.post("/asiakkaat", (req, res, n) => {
     console.log(req.body);
   }
 
-  var sql = ("INSERT INTO asiakas (etunimi,sukunimi,lahiosoite,postinro,email,puhelinnro) VALUES ('" + req.body.etunimi + "','" + req.body.sukunimi + "','" + req.body.lahiosoite + "','" + req.body.postinro + "','" + req.body.email + "','" + req.body.puhelinnro + "');");
-  console.log(sql);
+  var sql = ("INSERT INTO asiakas (etunimi,sukunimi,lahiosoite,postitoimipaikka,postinro,email,puhelinnro) VALUES ('" + req.body.etunimi + "','" + req.body.sukunimi + "','" + req.body.lahiosoite + "','" + req.body.postitoimipaikka + "','" + req.body.postinro + "','" + req.body.email + "','" + req.body.puhelinnro + "');")
   connection.query(sql, function (error, results, fields) {
 
     if (error) {
@@ -352,24 +345,7 @@ app.delete("/toimintaalue", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
   console.log(req.body);
 
-  var sql = ("DELETE FROM`vn`.`toimintaalue` WHERE`toimintaalue_id` = '" + req.body.id + "';")
-
-  connection.query(sql, function (error, results, fields) {
-
-    if (error) {
-      console.log("Virhe, syy: " + error);
-      res.send({ "status": 500, "error": error, "response": null });
-    }
-    res.json(results);
-  });
-});
-
-// --- DELETE asiakas ---
-app.delete("/asiakkaat", (req, res, n) => {
-  console.log("Body = " + JSON.stringify(req.body));
-  console.log(req.body);
-
-  var sql = ("DELETE FROM`vn`.`asiakas` WHERE`asiakas_id` = '" + req.body.id + "';")
+  var sql = ("DELETE FROM`vn`.`toimintaalue` WHERE`toimintaalue_id` = '" + req.body.toimintaalue_id + "');")
 
   connection.query(sql, function (error, results, fields) {
 
@@ -386,7 +362,7 @@ app.delete("/mokit", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
   console.log(req.body);
 
-  var sql = ("DELETE FROM`vn`.`mokki` WHERE`mokki_id` = '" + req.body.id + "';")
+  var sql = ("DELETE FROM`vn`.`mokki` WHERE`mokki_id` = '" + req.body.mokki_id + "');")
 
   connection.query(sql, function (error, results, fields) {
 
@@ -401,9 +377,9 @@ app.delete("/mokit", (req, res, n) => {
 // --- DELETE palvelu ---
 app.delete("/palvelut", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
+  console.log(req.body);
 
-  var sql = ("DELETE FROM`vn`.`palvelu` WHERE`palvelu_id` = '" + req.body.id + "';")
-  console.log(sql);
+  var sql = ("DELETE FROM`vn`.`palvelu` WHERE`palvelu_id` = '" + req.body.palvelu_id + "');")
 
   connection.query(sql, function (error, results, fields) {
 
@@ -451,25 +427,6 @@ app.put("/asiakkaat", (req, res, n) => {
   });
 });
 
-
-// --- UPDATE alue ---
-app.put("/toimialueet", (req, res, n) => {
-  console.log(req.body);
-
-
-  var sql = ("UPDATE`vn`.`toimintaalue` SET`nimi` = '" + req.body.nimi + "' WHERE`toimintaalue_id` ='" + req.body.toimintaalue_id + "';");
-  console.log(sql);
-
-
-  connection.query(sql, function (error, results, fields) {
-
-    if (error) {
-      console.log("Virhe, syy: " + error);
-      res.send({ "status": 500, "error": error, "response": null });
-    }
-    res.json(results);
-  });
-});
 
 // --- START SERVER ---
 app.listen(port, hostname, () => {
