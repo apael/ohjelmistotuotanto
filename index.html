@@ -447,24 +447,24 @@
                     $("#mtable").append('<button id="new" onclick="InsertInto(\'' + paate + '\')">Insert</button><button onclick="CloseModal()">Close</button>');
 
 
-
+                    if (id > 0) {
+                        $.ajax({
+                            url: url + "?id=" + id,
+                            type: 'GET',
+                            success: function (data) {
+                                var dataobjecti = data[0];
+                                for (x in dataobjecti) {
+                                    var value = dataobjecti[x];
+                                    $("#" + x).val(value);
+                                }
+                                $("#new").detach();
+                                $("#mtable").append('<button onclick="EditInfo(\'' + paate + '\')">Edit</button>');
+                            }
+                        });
+                    }
                 }
             });
-            if (id > 0) {
-                $.ajax({
-                    url: url + "?id=" + id,
-                    type: 'GET',
-                    success: function (data) {
-                        var dataobjecti = data[0];
-                        for (x in dataobjecti) {
-                            var value = dataobjecti[x];
-                            $("#" + x).val(value);
-                        }
-                        $("#new").detach();
-                        $("#mtable").append('<button onclick="EditInfo(\'' + paate + '\')">Edit</button>');
-                    }
-                });
-            }
+
 
 
         }
