@@ -3,6 +3,8 @@
 <title>Example</title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 
 <style>
@@ -61,6 +63,7 @@
         width: 85%;
         background-color: #f1f1f1;
         height: 100%;
+        /* Clear floats after the columns */
 
     }
 
@@ -139,8 +142,11 @@
         cursor: pointer;
     }
 </style>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
 <body>
@@ -150,26 +156,59 @@
 
     <section>
         <nav id="vas_laita">
+            <ul class="list-unstyled components" id="navElements">
 
-            <ul id="asLista">
+                <li class="active">
+                    <a href="#asLista" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Asiakkaat</a>
+                    <ul class="collapse list-unstyled" id="asLista">
+                    </ul>
+                </li><br>
+
+                <li class="active">
+                    <a href="#plLista" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        Palvelut</a>
+                    <ul class="collapse list-unstyled" id="plLista">
+                    </ul>
+                </li><br>
+
+                <li class="active">
+                    <a href="#taLista" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        Alueet</a>
+                    <ul class="collapse list-unstyled" id="taLista">
+                    </ul>
+                </li><br>
+
+
+                <li class="active">
+                    <a href="#lisaaLista" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        Lisää</a>
+                    <ul class="collapse list-unstyled" id="lisaaLista">
+                        <li><Button name="asiakas_btn" id="asiakas_btn"
+                                onclick="buildModal('asiakkaat','0')">LisääAsiakas</button></li>
+                        <li><Button name="lasku_btn" id="lasku_btn"
+                                onclick="buildModal('laskut','0')">LisääLasku</button><br></li>
+                        <li><Button name="palvelu_btn" id="palvelu_btn" onclick="buildModal('palvelut','0')">Lisää
+                                Palvelu</button><br></li>
+                        <li><Button name="alue_btn" id="alue_btn"
+                                onclick="buildModal('toimialueet','0')">LisääAlue</button><br></li>
+                        <li><Button name="varaus_btn" id="varaus_btn"
+                                onclick="buildModal('varaukset','0')">LisääVaraus</button><br></li>
+                        <li><Button name="mokki_btn" id="mokki_btn" onclick="buildModal('mokit','0')">Lisää
+                                Mökki</button><br></li>
+                        <li><Button name="posti_btn" id="posti_btn" onclick="buildModal('posti','0')">Lisää Posti
+                                os</button><br></li>
+                    </ul>
+                </li><br>
+
             </ul>
-            <Button name="asiakas_btn" id="asiakas_btn" onclick="buildModal('asiakkaat','0')">Lisää Asiakas</button><br>
-            <Button name="lasku_btn" id="lasku_btn" onclick="buildModal('laskut','0')">Lisää Lasku</button><br>
-            <Button name="palvelu_btn" id="palvelu_btn" onclick="buildModal('palvelut','0')">Lisää Palvelu</button><br>
-            <Button name="alue_btn" id="alue_btn" onclick="buildModal('toimialueet','0')">Lisää Alue</button><br>
-            <Button name="varaus_btn" id="varaus_btn" onclick="buildModal('varaukset?id=k','0')">Lisää
-                Varaus</button><br>
-            <Button name="mokki_btn" id="mokki_btn" onclick="buildModal('mokit','0')">Lisää Mökki</button><br>
-            <Button name="posti_btn" id="posti_btn" onclick="buildModal('posti','0')">Lisää Posti os</button><br>
-
-
         </nav>
 
 
         <article id="oik_laita">
-
-            <label for="alue">Toimialue</label>
-            <select name="alue" id="alue" onChange="FilterAlue()"> </select>
+            <input type="text" id="datepickerMin" placeholder="Valitse Min päivä" title="Valitse Min päivä">
+            <input type="text" id="datepickerMax" placeholder="Valitse Max päivä" title="Valitse Max päivä">
+            <!-- <Button name="filter_btn" id="filter_btn" onclick="getVaraukset('varaukset?id=k')" ;>Filtteröi</button>-->
 
             <table id="laskutaulu">
                 <thead>
@@ -209,12 +248,16 @@
 
         $(document).ready(function () {
             var tauludata;
+
+
+
             $.ajax({
                 url: "/toimialueet",
                 type: 'GET',
                 success: function (data) {
                     data.forEach(element => {
-                        $("#alue").append('<option value="' + element.nimi + '">' + element.nimi + '</option>');
+                        $("#taLista").append('<li><a href = "#" onclick="buildModal(\'toimialueet\',\'' + element.toimintaalue_id + '\')">' + element.nimi + '</a>' +
+                            '<a href="#" title="Poista" onclick="remove(\'toimialueet\',\'' + element.toimintaalue_id + '\')";><font color="black"><b> x</b></font></a></li>');
                     })
                 }
             });
@@ -226,11 +269,23 @@
                 type: 'GET',
                 success: function (data) {
                     data.forEach(element => {
-                        $("#asLista").append('<li><a href = "#" onclick="buildModal(\'asiakkaat\',\'' + element.asiakas_id + '\')">' + element.etunimi + " " + element.sukunimi + '</a></li>');
+                        $("#asLista").append('<li><a href = "#" onclick="buildModal(\'asiakkaat\',\'' + element.asiakas_id + '\')">' + element.etunimi + " " + element.sukunimi + '</a>' +
+                            '<a href="#" title="Poista" onclick="remove(\'asiakkaat\',\'' + element.asiakas_id + '\')";><font color="black"><b> x</b></font></a></li>');
                     })
                 }
             });
 
+
+            $.ajax({
+                url: "/palvelut",
+                type: 'GET',
+                success: function (data) {
+                    data.forEach(element => {
+                        $("#plLista").append('<li><a href = "#" onclick="buildModal(\'palvelut\',\'' + element.palvelu_id + '\')">' + element.nimi + '</a>' +
+                            '<a href="#" title="Poista" onclick="remove(\'palvelut\',\'' + element.palvelu_id + '\')";><font color="black"><b> x</b></font></a></li>');
+                    })
+                }
+            });
 
 
             var table = $('#laskutaulu').DataTable({
@@ -251,7 +306,7 @@
                     {
                         "targets": [8],
                         "data": null,
-                        "defaultContent": '<input class="cbox" type="checkbox">Maksettu</input>'
+                        "defaultContent": '<a href="#" class="edit" >Edit</a><br><input class="cbox" type="checkbox">Merkitse maksetuksi</input>'
                     },
                     {
                         "targets": [9],
@@ -293,7 +348,29 @@
 
             });
 
-            getVaraukset("varaukset");
+
+            var dt = new Date();
+            dt.setDate(dt.getDate() - 366);
+
+            $(function () {
+                $("#datepickerMin").datepicker({
+                    onSelect: function (date) {
+                        getVaraukset("varaukset?id=k");
+                    },
+                    minDate: dt
+                });
+            });
+
+            $(function () {
+                $("#datepickerMax").datepicker({
+                    onSelect: function (date) {
+                        getVaraukset("varaukset?id=k");
+                    },
+                    minDate: dt
+                });
+            });
+
+            getVaraukset("varaukset?id=k");
 
             $('#laskutaulu tbody').on('click', 'td.details-control', function () {//funktio joka avaa lisäinfot kun painaa nappulaa
 
@@ -314,15 +391,17 @@
 
                 $(this).attr("checked", "checked");
                 $(this).attr("disabled", "disabled");
-
                 var data = table.row($(this).parents('tr')).data();
                 data.maksettu = 1;
-
                 markAsPaid(data.varaus_id)
-
 
             });
 
+
+            $('#laskutaulu tbody').on('click', 'a', function () {//mark as paid funktio
+                var data = table.row($(this).parents('tr')).data();
+                buildModal('varaukset', data.varaus_id);
+            });
 
         });//document ready
 
@@ -333,9 +412,7 @@
             url = baseUrl + paate
             console.log(url);
 
-            var todo = {
-                "id": id
-            };
+            $("#modal_b").append('<table cellpadding="5" id="mtable" cellspacing="0" border="0" style="padding-left:50px;">');
 
             $.ajax({
                 url: url,
@@ -345,18 +422,19 @@
                     var i = 0;
                     console.log(data[0])
                     for (x in data[0]) {
-                        $("#modal_b").append('<label for="' + x + '">' + x + '</label><input type="text" class="modalInput" name="' + x + '" id="' + x + '"><br>');
+                        $("#mtable").append('<tr><td><label for="' + x + '">' + x + '</label></td><td><input type="text" class="modalInput" name="' + x + '" id="' + x + '"></td></tr><br>');
                         i++;
                     };
-                    $("#modal_b").append('<button id="new" onclick="InsertInto(\'' + paate + '\')">Insert</button><button onclick="CloseModal()">Close</button>');
+                    $("#mtable").append('<button id="new" onclick="InsertInto(\'' + paate + '\')">Insert</button><button onclick="CloseModal()">Close</button>');
+
+
 
                 }
             });
             if (id > 0) {
                 $.ajax({
-                    url: url,
+                    url: url + "?id=" + id,
                     type: 'GET',
-                    data: todo,
                     success: function (data) {
                         var dataobjecti = data[0];
                         for (x in dataobjecti) {
@@ -364,7 +442,7 @@
                             $("#" + x).val(value);
                         }
                         $("#new").detach();
-                        $("#modal_b").append('<button onclick="EditInfo(\'' + paate + '\')">Edit</button>');
+                        $("#mtable").append('<button onclick="EditInfo(\'' + paate + '\')">Edit</button>');
                     }
                 });
             }
@@ -382,13 +460,24 @@
 
             table.clear();
 
+            var oneYearFromNow = new Date();
+            oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+            var maxDate = Date.parse($("#datepickerMax").val()) || oneYearFromNow;
+            var minDate = Date.parse($("#datepickerMin").val()) || 0;
+
             $.ajax({
                 url: url,
                 type: 'GET',
                 success: function (data) {
                     data.forEach(element => {
+
+                        var startDate = Date.parse((element.varattu_alkupvm));
+                        var endDate = Date.parse((element.varattu_loppupvm));
+
+                        if (minDate < startDate && maxDate > endDate)
+                            table.row.add(element);
+
                         console.log(element);
-                        table.row.add(element);
                         table.draw();
                     });
 
@@ -431,6 +520,7 @@
                     console.log(data)
                     console.log(paate + " lisätty onnistuneesti")
                     CloseModal();
+                    location.reload();
                 }
             });
         }
@@ -466,11 +556,30 @@
                 data: todo,
                 success: function (data) {
                     console.log(paate + " arvot päivitetty");
+
+                }
+            });
+        }
+
+        function remove(paate, id) {//DELETE paate id
+            var todo = {
+                "id": id
+            };
+
+            $.ajax({
+                url: baseUrl + paate,
+                type: 'DELETE',
+                data: todo,
+                success: function (data) {
+                    console.log(paate + " poistettu");
+                    location.reload();
                 }
             });
         }
 
         function format(d) { //lisäinfot painaessa ensimmäistä saraketta
+            console.log(d);
+
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
                 '<tr>' +
                 '<td>nimi:</td>' +
@@ -478,19 +587,13 @@
                 '</tr>' +
                 '<tr>' +
                 '<td>lahiosoite:</td>' +
-                '<td>' + d.lahiosoite + '</td>' +
+                '<td>' + d.lahiosoite + " " + d.postinro + '</td>' +
                 '</tr>' +
                 '<td>puhelinnro:</td>' +
                 '<td>' + d.puhelinnro + '</td>' +
                 '</tr>' +
-                '<td>postinro:</td>' +
-                '<td>' + d.postinro + '</td>' +
-                '</tr>' +
                 '<td>summa:</td>' +
-                '<td>' + d.summa + '</td>' +
-                '</tr>' +
-                '<td>alv:</td>' +
-                '<td>' + d.alv + '</td>' +
+                '<td>' + d.summa + '€ alv ' + d.alv + ' %</td>' +
                 '</tr>' +
                 '</table>';
         }
