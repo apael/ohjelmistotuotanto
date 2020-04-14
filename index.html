@@ -206,8 +206,11 @@
 
 
         <article id="oik_laita">
-            <input type="text" id="datepickerMin" placeholder="Valitse Min päivä" title="Valitse Min päivä">
-            <input type="text" id="datepickerMax" placeholder="Valitse Max päivä" title="Valitse Max päivä">
+            <div id="filters">
+                <input type="text" id="datepickerMin" placeholder="Valitse Min päivä" title="Valitse Min päivä">
+                <input type="text" id="datepickerMax" placeholder="Valitse Max päivä" title="Valitse Max päivä">
+
+            </div>
             <!-- <Button name="filter_btn" id="filter_btn" onclick="getVaraukset('varaukset?id=k')" ;>Filtteröi</button>-->
 
             <table id="laskutaulu">
@@ -215,8 +218,8 @@
                     <tr>
                         <th></th>
                         <th>varaus_id</th>
-                        <th>asiakas_id</th>
-                        <th>mokki_mokki_id</th>
+                        <th>toiminta-alue</th>
+                        <th>mokkinimi</th>
                         <th>varattu_pvm</th>
                         <th>vahvistus_pvm</th>
                         <th>varattu_alkupvm</th>
@@ -258,7 +261,13 @@
                     data.forEach(element => {
                         $("#taLista").append('<li><a href = "#" onclick="buildModal(\'toimialueet\',\'' + element.toimintaalue_id + '\')">' + element.nimi + '</a>' +
                             '<a href="#" title="Poista" onclick="remove(\'toimialueet\',\'' + element.toimintaalue_id + '\')";><font color="black"><b> x</b></font></a></li>');
+
+                        $("#filters").append('&nbsp<input  class="filtercb" type="checkbox" id="' + element.nimi + '" value="' + element.toimintaalue_id + '" checked>' +
+                            '<label for="' + element.nimi + '">' + element.nimi + '</label>&nbsp');
                     })
+                    $(".filtercb").click(function () {
+                        getVaraukset("varaukset?id=k");
+                    });
                 }
             });
 
@@ -297,8 +306,8 @@
                         "defaultContent": ''
                     },
                     { "data": "varaus_id" },
-                    { "data": "asiakas_id" },
-                    { "data": "mokki_mokki_id" },
+                    { "data": "nimi" },
+                    { "data": "mokkinimi" },
                     { "data": "varattu_pvm" },
                     { "data": "vahvistus_pvm" },
                     { "data": "varattu_alkupvm" },
@@ -340,6 +349,11 @@
                     },
                     {
                         "targets": [15],
+                        "data": "toimintaalue_id",
+                        "visible": false
+                    },
+                    {
+                        "targets": [16],
                         "data": "puhelinnro",
                         "visible": false
                     }
@@ -398,10 +412,15 @@
             });
 
 
-            $('#laskutaulu tbody').on('click', 'a', function () {//mark as paid funktio
+            $('#laskutaulu tbody').on('click', 'a', function () {
                 var data = table.row($(this).parents('tr')).data();
                 buildModal('varaukset', data.varaus_id);
             });
+
+
+
+
+
 
         });//document ready
 
@@ -464,17 +483,26 @@
             oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
             var maxDate = Date.parse($("#datepickerMax").val()) || oneYearFromNow;
             var minDate = Date.parse($("#datepickerMin").val()) || 0;
+            var filters = [];
+
+
+
+
 
             $.ajax({
                 url: url,
                 type: 'GET',
                 success: function (data) {
+                    $(".filtercb").attr('checked', true).each(function () {
+                        if ($(this).prop("checked") == true)
+                            filters.push(this.value);
+                    });
+
                     data.forEach(element => {
 
                         var startDate = Date.parse((element.varattu_alkupvm));
                         var endDate = Date.parse((element.varattu_loppupvm));
-
-                        if (minDate < startDate && maxDate > endDate)
+                        if (minDate < startDate && maxDate > endDate && filters.includes(element.toimintaalue_id.toString()))
                             table.row.add(element);
 
                         console.log(element);

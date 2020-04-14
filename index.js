@@ -22,8 +22,8 @@ const path = require("path");
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'xx',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'xx',
+  user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
+  password: 'ruutti',
   database: 'vn',
   port: '3307'//databaseport tähän
 
@@ -46,7 +46,12 @@ app.get("/varaukset", (req, res, n) => {
 
 
   if (req.query.id == "k")
-    var sql = ("SELECT * FROM`varaus` CROSS JOIN`lasku` ON`varaus`.`varaus_id` = `lasku`.`varaus_id` CROSS JOIN`asiakas` ON`varaus`.`asiakas_id` = `asiakas`.`asiakas_id`;")
+    var sql = (
+      "SELECT * FROM`varaus` " +
+      "INNER JOIN lasku ON`varaus`.`varaus_id` = `lasku`.`varaus_id`" +
+      "INNER JOIN mokki ON`mokki`.`mokki_id` = `varaus`.`mokki_mokki_id`" +
+      "INNER JOIN asiakas ON`asiakas`.`asiakas_id` = `varaus`.`asiakas_id` " +
+      "INNER JOIN toimintaalue ON`toimintaalue`.`toimintaalue_id` = `mokki`.`toimintaalue_id`;");
 
 
   console.log(sql);
@@ -322,14 +327,14 @@ app.post("/varauspalvelu", (req, res, n) => {
 });
 
 // --- CREATE lasku ---
-app.post("/varauspalvelu", (req, res, n) => {
+app.post("/laskut", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
   console.log(req.body);
   if (req.body.length > 0) {
     console.log(req.body);
   }
 
-  var sql = ("INSERT INTO`vn`.`lasku`(`lasku_id`, `varaus_id`, `summa`, `alv`, `maksettu`) VALUES('" + req.body.lasku_id + "', '" + req.body.varaus_id + "', '" + req.body.summa + req.body.alv + "', '" + req.body.maksettu + "');")
+  var sql = ("INSERT INTO`vn`.`lasku`(`lasku_id`, `varaus_id`, `summa`, `alv`, `maksettu`) VALUES('" + req.body.lasku_id + "', '" + req.body.varaus_id + "', '" + req.body.summa + "', '" + req.body.alv + "', '" + req.body.maksettu + "');")
 
 
   connection.query(sql, function (error, results, fields) {
