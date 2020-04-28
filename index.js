@@ -22,8 +22,8 @@ const path = require("path");
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'x',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'x',
+  user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
+  password: 'Ruutti',
   database: 'vn',
   port: '3307'//databaseport tähän
 

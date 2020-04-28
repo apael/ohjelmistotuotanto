@@ -92,6 +92,7 @@
             this.btnPoista.TabIndex = 4;
             this.btnPoista.Text = "Poista";
             this.btnPoista.UseVisualStyleBackColor = true;
+            this.btnPoista.Click += new System.EventHandler(this.BtnPoista_Click);
             // 
             // btnMuokkaa
             // 
@@ -356,27 +357,27 @@
             // kohteetToolStripMenuItem
             // 
             this.kohteetToolStripMenuItem.Name = "kohteetToolStripMenuItem";
-            this.kohteetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.kohteetToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.kohteetToolStripMenuItem.Text = "Kohteet";
             this.kohteetToolStripMenuItem.Click += new System.EventHandler(this.KohteetToolStripMenuItem_Click);
             // 
             // laskutusToolStripMenuItem
             // 
             this.laskutusToolStripMenuItem.Name = "laskutusToolStripMenuItem";
-            this.laskutusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.laskutusToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.laskutusToolStripMenuItem.Text = "Laskutus";
             this.laskutusToolStripMenuItem.Click += new System.EventHandler(this.LaskutusToolStripMenuItem_Click);
             // 
             // asiakkaatToolStripMenuItem
             // 
             this.asiakkaatToolStripMenuItem.Name = "asiakkaatToolStripMenuItem";
-            this.asiakkaatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.asiakkaatToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.asiakkaatToolStripMenuItem.Text = "Asiakkaat?";
             // 
             // lisäpalvelutToolStripMenuItem
             // 
             this.lisäpalvelutToolStripMenuItem.Name = "lisäpalvelutToolStripMenuItem";
-            this.lisäpalvelutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lisäpalvelutToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.lisäpalvelutToolStripMenuItem.Text = "Lisäpalvelut?";
             // 
             // Varaus

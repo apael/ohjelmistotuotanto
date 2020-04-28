@@ -15,7 +15,7 @@ namespace Ohjelmistotuotanto
         public Kohteet()
         {
             InitializeComponent();
-
+           
             btnMuokkaa.Enabled = false; //Piilotetaan alkuun muokkaus ja poisto painikkeet ja enabloidaan kun datagridviewistä on valittu jotai
             btnPoista.Enabled = false;
         }
