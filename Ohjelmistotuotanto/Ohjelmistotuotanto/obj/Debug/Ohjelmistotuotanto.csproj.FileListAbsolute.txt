@@ -22,3 +22,15 @@ C:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\
 C:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.csproj.CoreCompileInputs.cache
 C:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.exe
 C:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.pdb
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.csprojAssemblyReference.cache
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.Kohteet.resources
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.Laskutus.resources
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.Varaus.resources
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.Properties.Resources.resources
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.csproj.GenerateResource.cache
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.csproj.CoreCompileInputs.cache
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.exe
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\obj\Debug\Ohjelmistotuotanto.pdb
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\bin\Debug\Ohjelmistotuotanto.exe.config
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\bin\Debug\Ohjelmistotuotanto.exe
+J:\projektit\ohjelmistotuotanto\Ohjelmistotuotanto\Ohjelmistotuotanto\bin\Debug\Ohjelmistotuotanto.pdb
