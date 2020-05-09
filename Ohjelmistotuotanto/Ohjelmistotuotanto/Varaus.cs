@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
+
 namespace Ohjelmistotuotanto
 {
     public partial class Varaus : Form
@@ -63,11 +64,11 @@ namespace Ohjelmistotuotanto
         {
 
             // GetAsiakkaat();
-           // PostAsiakkaat();
+            // PostAsiakkaat();
 
         }
 
-         static async void GetAsiakkaat()
+        static async void GetAsiakkaat()
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync("http://127.0.0.1:3002/asiakkaat");
