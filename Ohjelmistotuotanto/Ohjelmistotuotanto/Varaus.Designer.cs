@@ -111,6 +111,7 @@
             this.btnTallenna.TabIndex = 2;
             this.btnTallenna.Text = "Tallenna";
             this.btnTallenna.UseVisualStyleBackColor = true;
+            this.btnTallenna.Click += new System.EventHandler(this.BtnTallenna_ClickAsync);
             // 
             // gbTiedot
             // 

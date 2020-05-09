@@ -22,8 +22,8 @@ const path = require("path");
 
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'x',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'x',
+  user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
+  password: 'ruutti',
   database: 'vn',
   port: '3307'//databaseport tähän
 
@@ -335,6 +335,7 @@ app.post("/laskut", (req, res, n) => {
   }
 
   var sql = ("INSERT INTO`vn`.`lasku`(`lasku_id`, `varaus_id`, `summa`, `alv`, `maksettu`) VALUES('" + req.body.lasku_id + "', '" + req.body.varaus_id + "', '" + req.body.summa + "', '" + req.body.alv + "', '" + req.body.maksettu + "');")
+  console.log(sql);
 
 
   connection.query(sql, function (error, results, fields) {
@@ -353,6 +354,7 @@ app.delete("/toimintaalue", (req, res, n) => {
   console.log(req.body);
 
   var sql = ("DELETE FROM`vn`.`toimintaalue` WHERE`toimintaalue_id` = '" + req.body.id + "';")
+  console.log(sql);
 
   connection.query(sql, function (error, results, fields) {
 
@@ -367,9 +369,9 @@ app.delete("/toimintaalue", (req, res, n) => {
 // --- DELETE asiakas ---
 app.delete("/asiakkaat", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
-  console.log(req.body);
 
   var sql = ("DELETE FROM`vn`.`asiakas` WHERE`asiakas_id` = '" + req.body.id + "';")
+  console.log(sql);
 
   connection.query(sql, function (error, results, fields) {
 
