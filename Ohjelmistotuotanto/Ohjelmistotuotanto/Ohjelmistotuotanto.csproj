@@ -139,6 +139,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asiakas.cs" />
+    <Compile Include="Asiakkaat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Asiakkaat.Designer.cs">
+      <DependentUpon>Asiakkaat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kohde.cs" />
     <Compile Include="Kohteet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +159,7 @@
     <Compile Include="Laskutus.Designer.cs">
       <DependentUpon>Laskutus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Varaukset.cs" />
     <Compile Include="Varaus.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +168,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Asiakkaat.resx">
+      <DependentUpon>Asiakkaat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Kohteet.resx">
       <DependentUpon>Kohteet.cs</DependentUpon>
     </EmbeddedResource>
@@ -177,6 +189,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Asiakas.datasource" />
+    <None Include="Kohde.datasource" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -187,6 +201,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Varaukset.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
