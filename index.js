@@ -23,7 +23,7 @@ const path = require("path");
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'ruutti',
+  password: 'Ruutti',
   database: 'vn',
   port: '3307'//databaseport tähän
 
@@ -371,6 +371,23 @@ app.delete("/asiakkaat", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
 
   var sql = ("DELETE FROM`vn`.`asiakas` WHERE`asiakas_id` = '" + req.body.id + "';")
+  console.log(sql);
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
+// --- DELETE varaus ---
+app.delete("/varaukset", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+
+  var sql = ("DELETE FROM`vn`.`varaus` WHERE`varaus_id` = '" + req.body.id + "';")
   console.log(sql);
 
   connection.query(sql, function (error, results, fields) {

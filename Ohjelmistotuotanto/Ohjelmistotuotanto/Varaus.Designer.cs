@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gbVaraus = new System.Windows.Forms.GroupBox();
+            this.btnPaivita = new System.Windows.Forms.Button();
             this.btnPoista = new System.Windows.Forms.Button();
             this.btnMuokkaa = new System.Windows.Forms.Button();
             this.btnTallenna = new System.Windows.Forms.Button();
@@ -43,12 +45,12 @@
             this.dtpTulo = new System.Windows.Forms.DateTimePicker();
             this.lblTulo = new System.Windows.Forms.Label();
             this.gbVaraaja = new System.Windows.Forms.GroupBox();
-            this.tbKommentti = new System.Windows.Forms.TextBox();
+            this.tbLahiosoite = new System.Windows.Forms.TextBox();
             this.tbPuhelinnumero = new System.Windows.Forms.TextBox();
             this.tbSahkoposti = new System.Windows.Forms.TextBox();
             this.tbSukunimi = new System.Windows.Forms.TextBox();
             this.tbEtunimi = new System.Windows.Forms.TextBox();
-            this.lblKommentti = new System.Windows.Forms.Label();
+            this.lblLahiosoite = new System.Windows.Forms.Label();
             this.lblPuhelin = new System.Windows.Forms.Label();
             this.lblSahkoposti = new System.Windows.Forms.Label();
             this.lblSukunimi = new System.Windows.Forms.Label();
@@ -62,16 +64,30 @@
             this.laskutusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asiakkaatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lisäpalvelutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblPostinro = new System.Windows.Forms.Label();
+            this.tbPostinro = new System.Windows.Forms.TextBox();
+            this.lblToimipaikka = new System.Windows.Forms.Label();
+            this.tbToimipaikka = new System.Windows.Forms.TextBox();
+            this.varauksetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.asiakasBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.varaus_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.asiakas_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mokki_mokki_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.varattu_alkupvm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.varattu_loppupvm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbVaraus.SuspendLayout();
             this.gbTiedot.SuspendLayout();
             this.gbLisapalvelut.SuspendLayout();
             this.gbVaraaja.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaraukset)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.varauksetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.asiakasBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // gbVaraus
             // 
+            this.gbVaraus.Controls.Add(this.btnPaivita);
             this.gbVaraus.Controls.Add(this.btnPoista);
             this.gbVaraus.Controls.Add(this.btnMuokkaa);
             this.gbVaraus.Controls.Add(this.btnTallenna);
@@ -84,9 +100,19 @@
             this.gbVaraus.TabStop = false;
             this.gbVaraus.Text = "Varaus";
             // 
+            // btnPaivita
+            // 
+            this.btnPaivita.Location = new System.Drawing.Point(441, 232);
+            this.btnPaivita.Name = "btnPaivita";
+            this.btnPaivita.Size = new System.Drawing.Size(75, 23);
+            this.btnPaivita.TabIndex = 5;
+            this.btnPaivita.Text = "Päivitä";
+            this.btnPaivita.UseVisualStyleBackColor = true;
+            this.btnPaivita.Click += new System.EventHandler(this.BtnPaivita_Click);
+            // 
             // btnPoista
             // 
-            this.btnPoista.Location = new System.Drawing.Point(360, 233);
+            this.btnPoista.Location = new System.Drawing.Point(279, 232);
             this.btnPoista.Name = "btnPoista";
             this.btnPoista.Size = new System.Drawing.Size(75, 23);
             this.btnPoista.TabIndex = 4;
@@ -96,7 +122,7 @@
             // 
             // btnMuokkaa
             // 
-            this.btnMuokkaa.Location = new System.Drawing.Point(441, 233);
+            this.btnMuokkaa.Location = new System.Drawing.Point(360, 232);
             this.btnMuokkaa.Name = "btnMuokkaa";
             this.btnMuokkaa.Size = new System.Drawing.Size(75, 23);
             this.btnMuokkaa.TabIndex = 3;
@@ -211,12 +237,16 @@
             // 
             // gbVaraaja
             // 
-            this.gbVaraaja.Controls.Add(this.tbKommentti);
+            this.gbVaraaja.Controls.Add(this.tbToimipaikka);
+            this.gbVaraaja.Controls.Add(this.lblToimipaikka);
+            this.gbVaraaja.Controls.Add(this.tbPostinro);
+            this.gbVaraaja.Controls.Add(this.lblPostinro);
+            this.gbVaraaja.Controls.Add(this.tbLahiosoite);
             this.gbVaraaja.Controls.Add(this.tbPuhelinnumero);
             this.gbVaraaja.Controls.Add(this.tbSahkoposti);
             this.gbVaraaja.Controls.Add(this.tbSukunimi);
             this.gbVaraaja.Controls.Add(this.tbEtunimi);
-            this.gbVaraaja.Controls.Add(this.lblKommentti);
+            this.gbVaraaja.Controls.Add(this.lblLahiosoite);
             this.gbVaraaja.Controls.Add(this.lblPuhelin);
             this.gbVaraaja.Controls.Add(this.lblSahkoposti);
             this.gbVaraaja.Controls.Add(this.lblSukunimi);
@@ -228,12 +258,12 @@
             this.gbVaraaja.TabStop = false;
             this.gbVaraaja.Text = "Varaaja";
             // 
-            // tbKommentti
+            // tbLahiosoite
             // 
-            this.tbKommentti.Location = new System.Drawing.Point(89, 123);
-            this.tbKommentti.Name = "tbKommentti";
-            this.tbKommentti.Size = new System.Drawing.Size(195, 20);
-            this.tbKommentti.TabIndex = 9;
+            this.tbLahiosoite.Location = new System.Drawing.Point(89, 123);
+            this.tbLahiosoite.Name = "tbLahiosoite";
+            this.tbLahiosoite.Size = new System.Drawing.Size(195, 20);
+            this.tbLahiosoite.TabIndex = 9;
             // 
             // tbPuhelinnumero
             // 
@@ -263,14 +293,14 @@
             this.tbEtunimi.Size = new System.Drawing.Size(195, 20);
             this.tbEtunimi.TabIndex = 5;
             // 
-            // lblKommentti
+            // lblLahiosoite
             // 
-            this.lblKommentti.AutoSize = true;
-            this.lblKommentti.Location = new System.Drawing.Point(6, 126);
-            this.lblKommentti.Name = "lblKommentti";
-            this.lblKommentti.Size = new System.Drawing.Size(56, 13);
-            this.lblKommentti.TabIndex = 4;
-            this.lblKommentti.Text = "Kommentti";
+            this.lblLahiosoite.AutoSize = true;
+            this.lblLahiosoite.Location = new System.Drawing.Point(6, 126);
+            this.lblLahiosoite.Name = "lblLahiosoite";
+            this.lblLahiosoite.Size = new System.Drawing.Size(55, 13);
+            this.lblLahiosoite.TabIndex = 4;
+            this.lblLahiosoite.Text = "Lahiosoite";
             // 
             // lblPuhelin
             // 
@@ -310,7 +340,15 @@
             // 
             // dgvVaraukset
             // 
+            this.dgvVaraukset.AutoGenerateColumns = false;
             this.dgvVaraukset.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVaraukset.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.varaus_id,
+            this.asiakas_id,
+            this.mokki_mokki_id,
+            this.varattu_alkupvm,
+            this.varattu_loppupvm});
+            this.dgvVaraukset.DataSource = this.varauksetBindingSource;
             this.dgvVaraukset.Location = new System.Drawing.Point(627, 42);
             this.dgvVaraukset.Name = "dgvVaraukset";
             this.dgvVaraukset.Size = new System.Drawing.Size(303, 217);
@@ -373,7 +411,8 @@
             // 
             this.asiakkaatToolStripMenuItem.Name = "asiakkaatToolStripMenuItem";
             this.asiakkaatToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.asiakkaatToolStripMenuItem.Text = "Asiakkaat?";
+            this.asiakkaatToolStripMenuItem.Text = "Asiakkaat";
+            this.asiakkaatToolStripMenuItem.Click += new System.EventHandler(this.AsiakkaatToolStripMenuItem_Click);
             // 
             // lisäpalvelutToolStripMenuItem
             // 
@@ -381,10 +420,79 @@
             this.lisäpalvelutToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.lisäpalvelutToolStripMenuItem.Text = "Lisäpalvelut?";
             // 
+            // lblPostinro
+            // 
+            this.lblPostinro.AutoSize = true;
+            this.lblPostinro.Location = new System.Drawing.Point(6, 153);
+            this.lblPostinro.Name = "lblPostinro";
+            this.lblPostinro.Size = new System.Drawing.Size(65, 13);
+            this.lblPostinro.TabIndex = 6;
+            this.lblPostinro.Text = "Postinumero";
+            // 
+            // tbPostinro
+            // 
+            this.tbPostinro.Location = new System.Drawing.Point(89, 149);
+            this.tbPostinro.Name = "tbPostinro";
+            this.tbPostinro.Size = new System.Drawing.Size(195, 20);
+            this.tbPostinro.TabIndex = 10;
+            // 
+            // lblToimipaikka
+            // 
+            this.lblToimipaikka.AutoSize = true;
+            this.lblToimipaikka.Location = new System.Drawing.Point(6, 178);
+            this.lblToimipaikka.Name = "lblToimipaikka";
+            this.lblToimipaikka.Size = new System.Drawing.Size(83, 13);
+            this.lblToimipaikka.TabIndex = 11;
+            this.lblToimipaikka.Text = "Postitoimipaikka";
+            // 
+            // tbToimipaikka
+            // 
+            this.tbToimipaikka.Location = new System.Drawing.Point(89, 175);
+            this.tbToimipaikka.Name = "tbToimipaikka";
+            this.tbToimipaikka.Size = new System.Drawing.Size(195, 20);
+            this.tbToimipaikka.TabIndex = 12;
+            // 
+            // varauksetBindingSource
+            // 
+            this.varauksetBindingSource.DataSource = typeof(Ohjelmistotuotanto.Varaukset);
+            // 
+            // asiakasBindingSource
+            // 
+            this.asiakasBindingSource.DataSource = typeof(Ohjelmistotuotanto.Asiakas);
+            // 
+            // varaus_id
+            // 
+            this.varaus_id.DataPropertyName = "varaus_id";
+            this.varaus_id.HeaderText = "varaus_id";
+            this.varaus_id.Name = "varaus_id";
+            // 
+            // asiakas_id
+            // 
+            this.asiakas_id.DataPropertyName = "asiakas_id";
+            this.asiakas_id.HeaderText = "asiakas_id";
+            this.asiakas_id.Name = "asiakas_id";
+            // 
+            // mokki_mokki_id
+            // 
+            this.mokki_mokki_id.DataPropertyName = "mokki_mokki_id";
+            this.mokki_mokki_id.HeaderText = "mokki_mokki_id";
+            this.mokki_mokki_id.Name = "mokki_mokki_id";
+            // 
+            // varattu_alkupvm
+            // 
+            this.varattu_alkupvm.DataPropertyName = "varattu_alkupvm";
+            this.varattu_alkupvm.HeaderText = "varattu_alkupvm";
+            this.varattu_alkupvm.Name = "varattu_alkupvm";
+            // 
+            // varattu_loppupvm
+            // 
+            this.varattu_loppupvm.DataPropertyName = "varattu_loppupvm";
+            this.varattu_loppupvm.HeaderText = "varattu_loppupvm";
+            this.varattu_loppupvm.Name = "varattu_loppupvm";
+            // 
             // Varaus
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(942, 450);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -393,6 +501,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Varaus";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Varaus";
             this.gbVaraus.ResumeLayout(false);
             this.gbTiedot.ResumeLayout(false);
@@ -404,6 +513,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvVaraukset)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.varauksetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.asiakasBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,12 +537,12 @@
         private System.Windows.Forms.DateTimePicker dtpTulo;
         private System.Windows.Forms.Label lblTulo;
         private System.Windows.Forms.GroupBox gbVaraaja;
-        private System.Windows.Forms.TextBox tbKommentti;
+        private System.Windows.Forms.TextBox tbLahiosoite;
         private System.Windows.Forms.TextBox tbPuhelinnumero;
         private System.Windows.Forms.TextBox tbSahkoposti;
         private System.Windows.Forms.TextBox tbSukunimi;
         private System.Windows.Forms.TextBox tbEtunimi;
-        private System.Windows.Forms.Label lblKommentti;
+        private System.Windows.Forms.Label lblLahiosoite;
         private System.Windows.Forms.Label lblPuhelin;
         private System.Windows.Forms.Label lblSahkoposti;
         private System.Windows.Forms.Label lblSukunimi;
@@ -445,6 +556,19 @@
         private System.Windows.Forms.ToolStripMenuItem laskutusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asiakkaatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lisäpalvelutToolStripMenuItem;
+        private System.Windows.Forms.BindingSource asiakasBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn asiakasIdDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button btnPaivita;
+        private System.Windows.Forms.BindingSource varauksetBindingSource;
+        private System.Windows.Forms.TextBox tbPostinro;
+        private System.Windows.Forms.Label lblPostinro;
+        private System.Windows.Forms.TextBox tbToimipaikka;
+        private System.Windows.Forms.Label lblToimipaikka;
+        private System.Windows.Forms.DataGridViewTextBoxColumn varaus_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn asiakas_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mokki_mokki_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn varattu_alkupvm;
+        private System.Windows.Forms.DataGridViewTextBoxColumn varattu_loppupvm;
     }
 }
 
