@@ -260,7 +260,7 @@
                 success: function (data) {
                     data.forEach(element => {
                         $("#taLista").append('<li><a href = "#" onclick="buildModal(\'toimialueet\',\'' + element.toimintaalue_id + '\')">' + element.nimi + '</a>' +
-                            '<a href="#" title="Poista" onclick="remove(\'toimialueet\',\'' + element.toimintaalue_id + '\')";><font color="black"><b> x</b></font></a></li>');
+                            '<a href="#" title="Poista" onclick="remove(\'toimintaalue\',\'' + element.toimintaalue_id + '\')";><font color="black"><b> x</b></font></a></li>');
 
                         $("#filters").append('&nbsp<input  class="filtercb" type="checkbox" id="' + element.nimi + '" value="' + element.toimintaalue_id + '" checked>' +
                             '<label for="' + element.nimi + '">' + element.nimi + '</label>&nbsp');
@@ -584,7 +584,8 @@
                 data: todo,
                 success: function (data) {
                     console.log(paate + " arvot päivitetty");
-
+                    CloseModal();
+                    location.reload();
                 }
             });
         }

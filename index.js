@@ -453,6 +453,25 @@ app.put("/asiakkaat", (req, res, n) => {
   });
 });
 
+// --- UPDATE varaus ---
+app.put("/varaukset", (req, res, n) => {
+  console.log(req.body);
+
+
+  var sql = ("UPDATE `vn`.`varaus` SET `asiakas_id`='" + req.body.asiakas_id + "', `mokki_mokki_id`='" + req.body.mokki_mokki_id + "', `varattu_pvm`='" + req.body.varattu_pvm + "', `vahvistus_pvm`='" + req.body.vahvistus_pvm + "', `varattu_alkupvm`='" + req.body.varattu_alkupvm + "', `varattu_loppupvm`='" + req.body.varattu_loppupvm + "' WHERE  `varaus_id`='" + req.body.varaus_id + "';");
+
+  console.log(sql);
+
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
 
 // --- UPDATE alue ---
 app.put("/toimialueet", (req, res, n) => {
