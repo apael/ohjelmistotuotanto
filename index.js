@@ -23,14 +23,14 @@ const path = require("path");
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'ruuti',
+  password: 'Ruutti',
   database: 'vn',
   port: '3307'//databaseport tähän
 
 });
 app.get('/', function (req, res) {
   res.statusCode = 200;
-  res.sendFile('C:\Users\Pekka\Desktop\Koulu\Ohjelmistotuotanto\Projekti\ohjelmistotuotanto\index.html');
+  res.sendFile('J:/projektit/ohjelmistotuotanto/index.html');
 });
 
 // --- GET varaukset	   ---
@@ -54,7 +54,7 @@ app.get("/varaukset", (req, res, n) => {
       "INNER JOIN toimintaalue ON`toimintaalue`.`toimintaalue_id` = `mokki`.`toimintaalue_id`;");
 
 
-  console.log(sql); // 
+  console.log(sql);
 
 
   connection.query(sql, function (error, results, fields) {
@@ -383,6 +383,23 @@ app.delete("/asiakkaat", (req, res, n) => {
   });
 });
 
+// --- DELETE varaus ---
+app.delete("/varaukset", (req, res, n) => {
+  console.log("Body = " + JSON.stringify(req.body));
+
+  var sql = ("DELETE FROM`vn`.`varaus` WHERE`varaus_id` = '" + req.body.id + "';")
+  console.log(sql);
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
+
 // --- DELETE mokki ---
 app.delete("/mokit", (req, res, n) => {
   console.log("Body = " + JSON.stringify(req.body));
@@ -453,6 +470,25 @@ app.put("/asiakkaat", (req, res, n) => {
   });
 });
 
+// --- UPDATE varaus ---
+app.put("/varaukset", (req, res, n) => {
+  console.log(req.body);
+
+
+  var sql = ("UPDATE `vn`.`varaus` SET `asiakas_id`='" + req.body.asiakas_id + "', `mokki_mokki_id`='" + req.body.mokki_mokki_id + "', `varattu_pvm`='" + req.body.varattu_pvm + "', `vahvistus_pvm`='" + req.body.vahvistus_pvm + "', `varattu_alkupvm`='" + req.body.varattu_alkupvm + "', `varattu_loppupvm`='" + req.body.varattu_loppupvm + "' WHERE  `varaus_id`='" + req.body.varaus_id + "';");
+
+  console.log(sql);
+
+
+  connection.query(sql, function (error, results, fields) {
+
+    if (error) {
+      console.log("Virhe, syy: " + error);
+      res.send({ "status": 500, "error": error, "response": null });
+    }
+    res.json(results);
+  });
+});
 
 // --- UPDATE alue ---
 app.put("/toimialueet", (req, res, n) => {
