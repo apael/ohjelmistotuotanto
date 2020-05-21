@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Ohjelmistotuotanto</RootNamespace>
     <AssemblyName>Ohjelmistotuotanto</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -146,6 +147,7 @@
     <Compile Include="Asiakkaat.Designer.cs">
       <DependentUpon>Asiakkaat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Palvelu.cs" />
     <Compile Include="Kohde.cs" />
     <Compile Include="Kohteet.cs">
       <SubType>Form</SubType>
@@ -158,6 +160,12 @@
     </Compile>
     <Compile Include="Laskutus.Designer.cs">
       <DependentUpon>Laskutus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PalveluidenHallinta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PalveluidenHallinta.Designer.cs">
+      <DependentUpon>PalveluidenHallinta.cs</DependentUpon>
     </Compile>
     <Compile Include="Varaukset.cs" />
     <Compile Include="Varaus.cs">
@@ -176,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Laskutus.resx">
       <DependentUpon>Laskutus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PalveluidenHallinta.resx">
+      <DependentUpon>PalveluidenHallinta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Varaus.resx">
       <DependentUpon>Varaus.cs</DependentUpon>
@@ -205,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
