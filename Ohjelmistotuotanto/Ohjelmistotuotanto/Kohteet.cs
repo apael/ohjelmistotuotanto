@@ -56,5 +56,21 @@ namespace Ohjelmistotuotanto
             var kohde = response.Content.ReadAsAsync<IEnumerable<Kohde>>().Result;
             dgvKohde.DataSource = kohde;
         }
+
+        private async void btnTallenna_Click(object sender, EventArgs e)
+        {
+            string mokkinimi = tbNimi.Text;
+            string henkilomaara = tbNimi.Text;
+
+            HttpClient client = new HttpClient();
+
+            var data = new List<KeyValuePair<string, string>>();
+            data.Add(new KeyValuePair<string, string>("nimi", mokkinimi));
+            data.Add(new KeyValuePair<string, string>("henkilömäärä", henkilomaara));
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://127.0.0.1:3002/mokit");
+            request.Content = new FormUrlEncodedContent(data);
+            await client.SendAsync(request);
+        }
     }
 }

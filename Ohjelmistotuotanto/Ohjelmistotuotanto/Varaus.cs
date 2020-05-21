@@ -107,6 +107,7 @@ namespace Ohjelmistotuotanto
             var data = new List<KeyValuePair<string, string>>();
             data.Add(new KeyValuePair<string, string>("postinro", postinro));
             data.Add(new KeyValuePair<string, string>("toimipaikka", postintoimipaikka));
+
             var request = new HttpRequestMessage(HttpMethod.Post, "http://127.0.0.1:3002/posti");
             request.Content = new FormUrlEncodedContent(data);
             await client.SendAsync(request);
@@ -158,6 +159,6 @@ namespace Ohjelmistotuotanto
             await client.SendAsync(request);
         }
 
-       
+
     }
 }

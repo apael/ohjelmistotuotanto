@@ -41,7 +41,6 @@
             this.lblHenkilomaara = new System.Windows.Forms.Label();
             this.lblNimi = new System.Windows.Forms.Label();
             this.dgvKohde = new System.Windows.Forms.DataGridView();
-            this.kohdeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mokki_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toimintaalueidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.postinroDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +48,7 @@
             this.katuosoiteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kuvausDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.henkilomaaraDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kohdeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gbKohde.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKohde)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kohdeBindingSource)).BeginInit();
@@ -110,6 +110,7 @@
             this.btnTallenna.TabIndex = 6;
             this.btnTallenna.Text = "Tallenna";
             this.btnTallenna.UseVisualStyleBackColor = true;
+            this.btnTallenna.Click += new System.EventHandler(this.btnTallenna_Click);
             // 
             // tbHinta
             // 
@@ -177,10 +178,6 @@
             this.dgvKohde.Size = new System.Drawing.Size(380, 168);
             this.dgvKohde.TabIndex = 1;
             // 
-            // kohdeBindingSource
-            // 
-            this.kohdeBindingSource.DataSource = typeof(Ohjelmistotuotanto.Kohde);
-            // 
             // mokki_id
             // 
             this.mokki_id.DataPropertyName = "mokki_id";
@@ -222,6 +219,10 @@
             this.henkilomaaraDataGridViewTextBoxColumn.DataPropertyName = "henkilomaara";
             this.henkilomaaraDataGridViewTextBoxColumn.HeaderText = "henkilomaara";
             this.henkilomaaraDataGridViewTextBoxColumn.Name = "henkilomaaraDataGridViewTextBoxColumn";
+            // 
+            // kohdeBindingSource
+            // 
+            this.kohdeBindingSource.DataSource = typeof(Ohjelmistotuotanto.Kohde);
             // 
             // Kohteet
             // 
