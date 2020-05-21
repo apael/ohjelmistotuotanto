@@ -19,7 +19,7 @@ namespace Ohjelmistotuotanto
         {
             InitializeComponent();
             dgvPoistetutpalvelut.DataSource = null;
-            HaePalvelut();
+            //HaePalvelut();
             //HaePoistetutPalvelut();
         }
 
@@ -107,7 +107,7 @@ namespace Ohjelmistotuotanto
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://127.0.0.1:3002/palvelut");
             HttpResponseMessage response = client.GetAsync("palvelut").Result;
-            Debug.WriteLine(response.Content.ReadAsStringAsync().Result);
+           
             var varaukset = response.Content.ReadAsAsync<IEnumerable<Palvelu>>().Result;
             dgvPalvelut.DataSource = varaukset;
         }
@@ -123,7 +123,11 @@ namespace Ohjelmistotuotanto
             dgvPoistetutpalvelut.DataSource = poistettupalvelu;
         }
 
- 
+        private void btnAktivoipalvelu_Click(object sender, EventArgs e)
+        {
+
+        }
+
         /*
         // Tarkastaa ettei palvelua joka on jo varattu voi poistaa käytöstä 
         public async void TarkastaPvm()
