@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Ohjelmistotuotanto"
+    "\\Ohjelmistotuotanto",
+    "\\Ohjelmistotuotanto\\Ohjelmistotuotanto"
   ],
-  "SelectedNode": "\\Ohjelmistotuotanto\\Ohjelmistotuotanto.sln",
+  "SelectedNode": "\\index.js",
   "PreviewInSolutionExplorer": false
 }

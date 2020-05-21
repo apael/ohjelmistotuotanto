@@ -40,6 +40,12 @@ namespace Ohjelmistotuotanto
             asiakkaat.ShowDialog();
         }
 
+        private void palveluidenHallintaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PalveluidenHallinta PH = new PalveluidenHallinta();
+            PH.ShowDialog();
+        }
+
 
         private void BtnPaivita_Click(object sender, EventArgs e)
         {
@@ -152,6 +158,6 @@ namespace Ohjelmistotuotanto
             await client.SendAsync(request);
         }
 
-
+       
     }
 }
