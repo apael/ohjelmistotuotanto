@@ -66,18 +66,21 @@
             this.gbKohde.Controls.Add(this.lblHinta);
             this.gbKohde.Controls.Add(this.lblHenkilomaara);
             this.gbKohde.Controls.Add(this.lblNimi);
-            this.gbKohde.Location = new System.Drawing.Point(13, 32);
+            this.gbKohde.Location = new System.Drawing.Point(17, 39);
+            this.gbKohde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gbKohde.Name = "gbKohde";
-            this.gbKohde.Size = new System.Drawing.Size(334, 174);
+            this.gbKohde.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbKohde.Size = new System.Drawing.Size(445, 214);
             this.gbKohde.TabIndex = 0;
             this.gbKohde.TabStop = false;
             this.gbKohde.Text = "Kohteen tiedot";
             // 
             // btnPaivita
             // 
-            this.btnPaivita.Location = new System.Drawing.Point(171, 145);
+            this.btnPaivita.Location = new System.Drawing.Point(228, 178);
+            this.btnPaivita.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPaivita.Name = "btnPaivita";
-            this.btnPaivita.Size = new System.Drawing.Size(75, 23);
+            this.btnPaivita.Size = new System.Drawing.Size(100, 28);
             this.btnPaivita.TabIndex = 9;
             this.btnPaivita.Text = "Päivitä";
             this.btnPaivita.UseVisualStyleBackColor = true;
@@ -85,9 +88,10 @@
             // 
             // btnPoista
             // 
-            this.btnPoista.Location = new System.Drawing.Point(9, 145);
+            this.btnPoista.Location = new System.Drawing.Point(12, 178);
+            this.btnPoista.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPoista.Name = "btnPoista";
-            this.btnPoista.Size = new System.Drawing.Size(75, 23);
+            this.btnPoista.Size = new System.Drawing.Size(100, 28);
             this.btnPoista.TabIndex = 8;
             this.btnPoista.Text = "Poista";
             this.btnPoista.UseVisualStyleBackColor = true;
@@ -95,18 +99,20 @@
             // 
             // btnMuokkaa
             // 
-            this.btnMuokkaa.Location = new System.Drawing.Point(90, 145);
+            this.btnMuokkaa.Location = new System.Drawing.Point(120, 178);
+            this.btnMuokkaa.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMuokkaa.Name = "btnMuokkaa";
-            this.btnMuokkaa.Size = new System.Drawing.Size(75, 23);
+            this.btnMuokkaa.Size = new System.Drawing.Size(100, 28);
             this.btnMuokkaa.TabIndex = 7;
             this.btnMuokkaa.Text = "Muokkaa";
             this.btnMuokkaa.UseVisualStyleBackColor = true;
             // 
             // btnTallenna
             // 
-            this.btnTallenna.Location = new System.Drawing.Point(252, 145);
+            this.btnTallenna.Location = new System.Drawing.Point(336, 178);
+            this.btnTallenna.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTallenna.Name = "btnTallenna";
-            this.btnTallenna.Size = new System.Drawing.Size(75, 23);
+            this.btnTallenna.Size = new System.Drawing.Size(100, 28);
             this.btnTallenna.TabIndex = 6;
             this.btnTallenna.Text = "Tallenna";
             this.btnTallenna.UseVisualStyleBackColor = true;
@@ -114,49 +120,55 @@
             // 
             // tbHinta
             // 
-            this.tbHinta.Location = new System.Drawing.Point(44, 71);
+            this.tbHinta.Location = new System.Drawing.Point(111, 86);
+            this.tbHinta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbHinta.Name = "tbHinta";
-            this.tbHinta.Size = new System.Drawing.Size(161, 20);
+            this.tbHinta.Size = new System.Drawing.Size(161, 22);
             this.tbHinta.TabIndex = 5;
             // 
             // tbHenkilomaara
             // 
-            this.tbHenkilomaara.Location = new System.Drawing.Point(84, 45);
+            this.tbHenkilomaara.Location = new System.Drawing.Point(51, 22);
+            this.tbHenkilomaara.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbHenkilomaara.Name = "tbHenkilomaara";
-            this.tbHenkilomaara.Size = new System.Drawing.Size(121, 20);
+            this.tbHenkilomaara.Size = new System.Drawing.Size(221, 22);
             this.tbHenkilomaara.TabIndex = 4;
             // 
             // tbNimi
             // 
-            this.tbNimi.Location = new System.Drawing.Point(39, 19);
+            this.tbNimi.Location = new System.Drawing.Point(111, 56);
+            this.tbNimi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbNimi.Name = "tbNimi";
-            this.tbNimi.Size = new System.Drawing.Size(166, 20);
+            this.tbNimi.Size = new System.Drawing.Size(161, 22);
             this.tbNimi.TabIndex = 3;
             // 
             // lblHinta
             // 
             this.lblHinta.AutoSize = true;
-            this.lblHinta.Location = new System.Drawing.Point(6, 74);
+            this.lblHinta.Location = new System.Drawing.Point(8, 91);
+            this.lblHinta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHinta.Name = "lblHinta";
-            this.lblHinta.Size = new System.Drawing.Size(32, 13);
+            this.lblHinta.Size = new System.Drawing.Size(41, 17);
             this.lblHinta.TabIndex = 2;
             this.lblHinta.Text = "Hinta";
             // 
             // lblHenkilomaara
             // 
             this.lblHenkilomaara.AutoSize = true;
-            this.lblHenkilomaara.Location = new System.Drawing.Point(6, 48);
+            this.lblHenkilomaara.Location = new System.Drawing.Point(8, 59);
+            this.lblHenkilomaara.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHenkilomaara.Name = "lblHenkilomaara";
-            this.lblHenkilomaara.Size = new System.Drawing.Size(72, 13);
+            this.lblHenkilomaara.Size = new System.Drawing.Size(95, 17);
             this.lblHenkilomaara.TabIndex = 1;
             this.lblHenkilomaara.Text = "Henkilömäärä";
             // 
             // lblNimi
             // 
             this.lblNimi.AutoSize = true;
-            this.lblNimi.Location = new System.Drawing.Point(6, 22);
+            this.lblNimi.Location = new System.Drawing.Point(8, 27);
+            this.lblNimi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNimi.Name = "lblNimi";
-            this.lblNimi.Size = new System.Drawing.Size(27, 13);
+            this.lblNimi.Size = new System.Drawing.Size(35, 17);
             this.lblNimi.TabIndex = 0;
             this.lblNimi.Text = "Nimi";
             // 
@@ -173,52 +185,68 @@
             this.kuvausDataGridViewTextBoxColumn,
             this.henkilomaaraDataGridViewTextBoxColumn});
             this.dgvKohde.DataSource = this.kohdeBindingSource;
-            this.dgvKohde.Location = new System.Drawing.Point(366, 32);
+            this.dgvKohde.Location = new System.Drawing.Point(488, 39);
+            this.dgvKohde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvKohde.Name = "dgvKohde";
-            this.dgvKohde.Size = new System.Drawing.Size(380, 168);
+            this.dgvKohde.RowHeadersWidth = 51;
+            this.dgvKohde.Size = new System.Drawing.Size(507, 207);
             this.dgvKohde.TabIndex = 1;
             // 
             // mokki_id
             // 
             this.mokki_id.DataPropertyName = "mokki_id";
             this.mokki_id.HeaderText = "mokki_id";
+            this.mokki_id.MinimumWidth = 6;
             this.mokki_id.Name = "mokki_id";
+            this.mokki_id.Width = 125;
             // 
             // toimintaalueidDataGridViewTextBoxColumn
             // 
             this.toimintaalueidDataGridViewTextBoxColumn.DataPropertyName = "toimintaalue_id";
             this.toimintaalueidDataGridViewTextBoxColumn.HeaderText = "toimintaalue_id";
+            this.toimintaalueidDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.toimintaalueidDataGridViewTextBoxColumn.Name = "toimintaalueidDataGridViewTextBoxColumn";
+            this.toimintaalueidDataGridViewTextBoxColumn.Width = 125;
             // 
             // postinroDataGridViewTextBoxColumn
             // 
             this.postinroDataGridViewTextBoxColumn.DataPropertyName = "postinro";
             this.postinroDataGridViewTextBoxColumn.HeaderText = "postinro";
+            this.postinroDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.postinroDataGridViewTextBoxColumn.Name = "postinroDataGridViewTextBoxColumn";
+            this.postinroDataGridViewTextBoxColumn.Width = 125;
             // 
             // mokkinimiDataGridViewTextBoxColumn
             // 
             this.mokkinimiDataGridViewTextBoxColumn.DataPropertyName = "mokkinimi";
             this.mokkinimiDataGridViewTextBoxColumn.HeaderText = "mokkinimi";
+            this.mokkinimiDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.mokkinimiDataGridViewTextBoxColumn.Name = "mokkinimiDataGridViewTextBoxColumn";
+            this.mokkinimiDataGridViewTextBoxColumn.Width = 125;
             // 
             // katuosoiteDataGridViewTextBoxColumn
             // 
             this.katuosoiteDataGridViewTextBoxColumn.DataPropertyName = "katuosoite";
             this.katuosoiteDataGridViewTextBoxColumn.HeaderText = "katuosoite";
+            this.katuosoiteDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.katuosoiteDataGridViewTextBoxColumn.Name = "katuosoiteDataGridViewTextBoxColumn";
+            this.katuosoiteDataGridViewTextBoxColumn.Width = 125;
             // 
             // kuvausDataGridViewTextBoxColumn
             // 
             this.kuvausDataGridViewTextBoxColumn.DataPropertyName = "kuvaus";
             this.kuvausDataGridViewTextBoxColumn.HeaderText = "kuvaus";
+            this.kuvausDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.kuvausDataGridViewTextBoxColumn.Name = "kuvausDataGridViewTextBoxColumn";
+            this.kuvausDataGridViewTextBoxColumn.Width = 125;
             // 
             // henkilomaaraDataGridViewTextBoxColumn
             // 
             this.henkilomaaraDataGridViewTextBoxColumn.DataPropertyName = "henkilomaara";
             this.henkilomaaraDataGridViewTextBoxColumn.HeaderText = "henkilomaara";
+            this.henkilomaaraDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.henkilomaaraDataGridViewTextBoxColumn.Name = "henkilomaaraDataGridViewTextBoxColumn";
+            this.henkilomaaraDataGridViewTextBoxColumn.Width = 125;
             // 
             // kohdeBindingSource
             // 
@@ -226,11 +254,12 @@
             // 
             // Kohteet
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.dgvKohde);
             this.Controls.Add(this.gbKohde);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Kohteet";
             this.Text = "Kohteet";
             this.gbKohde.ResumeLayout(false);

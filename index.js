@@ -23,7 +23,7 @@ const path = require("path");
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'ruutti',
+  password: 'ruuti',
   database: 'vn',
   port: '3307'//databaseport tähän
 
@@ -211,7 +211,7 @@ app.post("/mokit", (req, res, n) => {
   }
 
   var sql = ("INSERT INTO`vn`.`mokki`(`toimintaalue_id`, `postinro`, `mokkinimi`, `katuosoite`, `kuvaus`, `henkilomaara`, `varustelu`) VALUES('" + req.body.toimintaalue_id + "', '" + req.body.postinro + "', '" + req.body.mokkinimi + "', '" + req.body.katuosoite + "', '" + req.body.kuvaus + "', '" + req.body.henkilomaara + "', '" + req.body.varustelu + "');")
-
+  console.log(sql);
 
   connection.query(sql, function (error, results, fields) {
 
