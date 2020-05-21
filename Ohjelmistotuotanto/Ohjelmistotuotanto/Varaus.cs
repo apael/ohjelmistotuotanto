@@ -64,7 +64,7 @@ namespace Ohjelmistotuotanto
         {
 
             // GetAsiakkaat();
-            // PostAsiakkaat();
+            PostAsiakkaat();
 
         }
 
@@ -101,7 +101,7 @@ namespace Ohjelmistotuotanto
             HttpClient client = new HttpClient();
 
             var data = new List<KeyValuePair<string, string>>();
-            data.Add(new KeyValuePair<string, string>("summa", "300"));
+            data.Add(new KeyValuePair<string, string>(tbEtunimi.Text, "300"));
             data.Add(new KeyValuePair<string, string>("varaus_id", "1"));
             data.Add(new KeyValuePair<string, string>("alv", "24"));
             data.Add(new KeyValuePair<string, string>("maksettu", "0"));
@@ -111,6 +111,5 @@ namespace Ohjelmistotuotanto
             request.Content = new FormUrlEncodedContent(data);
             await client.SendAsync(request);
         }
-
     }
 }

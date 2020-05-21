@@ -23,14 +23,14 @@ const path = require("path");
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',  // HUOM! Älä käytä root:n tunnusta tuotantokoneella!!!!
-  password: 'ruutti',
+  password: 'ruuti',
   database: 'vn',
   port: '3307'//databaseport tähän
 
 });
 app.get('/', function (req, res) {
   res.statusCode = 200;
-  res.sendFile('J:/projektit/ohjelmistotuotanto/index.html');
+  res.sendFile('C:\Users\Pekka\Desktop\Koulu\Ohjelmistotuotanto\Projekti\ohjelmistotuotanto\index.html');
 });
 
 // --- GET varaukset	   ---
@@ -54,7 +54,7 @@ app.get("/varaukset", (req, res, n) => {
       "INNER JOIN toimintaalue ON`toimintaalue`.`toimintaalue_id` = `mokki`.`toimintaalue_id`;");
 
 
-  console.log(sql);
+  console.log(sql); // 
 
 
   connection.query(sql, function (error, results, fields) {
